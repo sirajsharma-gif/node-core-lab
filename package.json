@@ -15,6 +15,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server-1": "$env:SERVER_ID=\"APP_B\"; $env:PORT=\"3002\"; node day-03/distributed-lock/app-server.js"
   }
 }
