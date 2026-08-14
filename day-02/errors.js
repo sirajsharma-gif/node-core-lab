@@ -40,7 +40,8 @@ class ConfigError extends AppError {
   }
 }
 
-const failedApi = (ms) => new Promise((_, reject) => setTimeout(reject, ms));
+const failedApi = (ms) =>
+  new Promise((_, reject) => setTimeout(() => reject("Api failed"), ms));
 
 async function loadApiData() {
   try {
@@ -49,3 +50,5 @@ async function loadApiData() {
     throw new AppError(`Failed to data`, { cause: err });
   }
 }
+
+await loadApiData();

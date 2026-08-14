@@ -1,7 +1,7 @@
 const failedApi = (ms) => new Promise((_, reject) => setTimeout(reject, ms));
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function backoffDelay(fn, retries = 5, delay = 100) {
+async function backoffDelay(fn, retries = 5, delay = 1000) {
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
       await fn(delay);
@@ -14,4 +14,4 @@ async function backoffDelay(fn, retries = 5, delay = 100) {
   }
 }
 
-await backoffDelay(failedApi, 5, 100);
+await backoffDelay(failedApi, 5, 1000);
