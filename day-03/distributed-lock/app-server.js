@@ -57,6 +57,21 @@ const server = createServer(async (req, res) => {
 
         await lockServer.release(resourceKey, lockId);
 
+        while (true) {
+          if (SERVER_ID === "APP_B") {
+            const res = await lockServer.set(resourceKey, lockId, {
+              owner: SERVER_ID,
+              NX: true,
+              PX: LOCK_TTL,
+            });
+
+            if (res.acquired) {
+              console.log("Lock acquired");
+              break;
+            }
+          }
+        }
+
         console.log(`[${SERVER_ID}] Lock released`);
       }
     } catch (err) {
@@ -77,3 +92,5 @@ const server = createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`[${SERVER_ID}] Running on http://localhost:${PORT}`);
 });
+
+// 2 servers -> lockServer (keys and unique and lockID)
