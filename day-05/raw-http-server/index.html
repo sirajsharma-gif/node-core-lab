@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSE Test</title>
+  </head>
+  <body>
+    <script>
+      const data = [];
+      const events = new EventSource("http://localhost:3000/events");
+
+      events.addEventListener("connected", (event) => {
+        console.log("Connected: ", event.data);
+      });
+
+      events.addEventListener("update", (event) => {
+        const parsedData = JSON.parse(event.data);
+        console.log("Update: ", parsedData);
+        data.push(parsedData);
+
+        if (data.length === 10) {
+          console.log("Event completed");
+          events.close();
+        }
+      });
+    </script>
+  </body>
+</html>
